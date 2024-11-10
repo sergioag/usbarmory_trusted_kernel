@@ -46,7 +46,7 @@
 
 /dts-v1/;
 
-#include "imx6ulz.dtsi"
+#include "nxp/imx/imx6ulz.dtsi"
 
 / {
 	model = "F-Secure USB armory Mk II";

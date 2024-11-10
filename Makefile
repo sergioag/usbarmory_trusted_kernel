@@ -1,15 +1,15 @@
 
 JOBS=2
-LINUX_VER=5.17.3
+LINUX_VER=6.11.7
 LINUX_VER_MAJOR=${shell echo ${LINUX_VER} | cut -d '.' -f1,2}
 KBUILD_BUILD_USER=usbarmory
 KBUILD_BUILD_HOST=f-secure-foundry
 LOCALVERSION=-0
-UBOOT_VER=2022.01
+UBOOT_VER=2024.10
 
 USBARMORY_REPO=https://raw.githubusercontent.com/f-secure-foundry/usbarmory/master
-MXS_DCP_REPO=https://github.com/usbarmory/mxs-dcp
-CAAM_KEYBLOB_REPO=https://github.com/f-secure-foundry/caam-keyblob
+MXS_DCP_REPO=https://github.com/sergioag/mxs-dcp
+CAAM_KEYBLOB_REPO=https://github.com/usbarmory/caam-keyblob
 
 .DEFAULT_GOAL := all
 .PHONY: check_version mxs-dcp caam-keyblob all clean
@@ -31,8 +31,8 @@ u-boot-${UBOOT_VER}.tar.bz2:
 	wget https://ftp.denx.de/pub/u-boot/u-boot-${UBOOT_VER}.tar.bz2.sig -O u-boot-${UBOOT_VER}.tar.bz2.sig
 
 linux-${LINUX_VER}.tar.xz:
-	wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${LINUX_VER}.tar.xz -O linux-${LINUX_VER}.tar.xz
-	wget https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-${LINUX_VER}.tar.sign -O linux-${LINUX_VER}.tar.sign
+	wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${LINUX_VER}.tar.xz -O linux-${LINUX_VER}.tar.xz
+	wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${LINUX_VER}.tar.sign -O linux-${LINUX_VER}.tar.sign
 
 mxs-dcp-master.zip: check_version
 	@if test "${IMX}" = "imx6ulz"; then \
@@ -136,7 +136,7 @@ linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf.deb: check_vers
 	cd linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf/boot ; ln -sf ${IMX}-usbarmory-default-${LINUX_VER}${LOCALVERSION}.dtb ${IMX}-usbarmory.dtb
 	cd linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf/boot ; ln -sf ${IMX}-usbarmory.dtb imx6ull-usbarmory.dtb
 	rm linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf/lib/modules/${LINUX_VER}${LOCALVERSION}/build
-	rm linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf/lib/modules/${LINUX_VER}${LOCALVERSION}/source
+	#rm linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf/lib/modules/${LINUX_VER}${LOCALVERSION}/source
 	chmod 755 linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf/DEBIAN
 	fakeroot dpkg-deb -b linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf linux-image-usbarmory-mark-two_${LINUX_VER}${LOCALVERSION}_armhf.deb
 
